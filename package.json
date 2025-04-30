@@ -1,0 +1,21 @@
+{
+  "name": "playwright-mock-project-2024-for-orangehrm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.2",
+    "allure-playwright": "^3.2.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "fs-extra": "^11.3.0",
+    "pdf-lib": "^1.17.1",
+    "uuid": "^11.1.0"
+  }
+}
