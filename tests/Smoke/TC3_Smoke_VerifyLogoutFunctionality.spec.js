@@ -1,6 +1,4 @@
-import { test } from "../Fixture/PageFixture"; 
-import Dashboard from "../Pages/Dashboard";
-import LoginPage from "../Pages/LoginPage";
+import { test } from "../../Fixture/PageFixture"; 
 
 import fs from 'fs';
 import { join } from 'path';
@@ -8,18 +6,24 @@ const LoginPageData = JSON.parse(
   fs.readFileSync(join('JsonFiles', 'LoginPageData.json'), 'utf-8')
 );
 
-test('LoginwithValidCredentials', async ({ playwrightFactoryMethods }) => {  
-  const loginPage = new LoginPage(playwrightFactoryMethods.page);
-  const dashboard = new Dashboard(playwrightFactoryMethods.page);
+test('TC3_Smoke_VerifyLogoutFunctionality.spec', async ({ playwrightFactoryMethods }) => {  
 
   await playwrightFactoryMethods.GoToPage();
+  await logger.logStep(page, 'Navigated to login page');
   await playwrightFactoryMethods.InputValuesinTB(loginPage.Username, LoginPageData.Username);
+  await logger.logStep(page, 'Entered Username');
   await playwrightFactoryMethods.InputValuesinTB(loginPage.Password, LoginPageData.Password);
+  await logger.logStep(page, 'Entered Password');
   await playwrightFactoryMethods.ClickOnButton(loginPage.LoginButton);
+  await logger.logStep(page, 'Clicked Login button');
   await playwrightFactoryMethods.ClickOnButton(dashboard.UserDDL);
+  await logger.logStep(page, 'Clicked UserMenu');
   await playwrightFactoryMethods.ClickOnButton(dashboard.LogOutButton);
+  await logger.logStep(page, 'Clicked Logout button');
   await playwrightFactoryMethods.VerifyFieldExists(loginPage.LoginButton);
+  await logger.logStep(page, 'Verify LoginButtonExisting');
   await playwrightFactoryMethods.VerifyFieldExists(loginPage.ForgetPassword);
-
+  await logger.logStep(page, 'Verify ForgetPasswordExisting');
+  await generatePdf(logger.getSteps(), 'TC3_Smoke_VerifyLogoutFunctionality.spec');
 
 });

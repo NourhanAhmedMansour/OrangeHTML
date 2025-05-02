@@ -1,9 +1,6 @@
-import { test } from "../Fixture/PageFixture"; 
-import Dashboard from "../Pages/Dashboard";
-import LoginPage from "../Pages/LoginPage";
-import AddEmpolyee from "../Pages/AddEmpolyee";
-const { StepLogger } = require('../utils/stepLogger');
-const { generatePdf } = require('../utils/pdfGenerator');
+import { test } from "../../Fixture/PageFixture";
+const { StepLogger } = require('../../utils/stepLogger');
+const { generatePdf } = require('../../utils/pdfGenerator');
 import fs from 'fs';
 import { join } from 'path';
 const LoginPageData = JSON.parse(
@@ -12,10 +9,7 @@ const LoginPageData = JSON.parse(
 const AddEmpolyeeData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddEmpolyeeData.json'), 'utf-8')
   );
-test('TC2_Reg_DeleteEmployee.spec', async ({ playwrightFactoryMethods, page }) => {  
-const loginPage = new LoginPage(playwrightFactoryMethods.page);
-const dashboard = new Dashboard(playwrightFactoryMethods.page);
-const addEmpolyee = new AddEmpolyee (playwrightFactoryMethods.page);
+test('TC3_Reg_DeleteEmployee.spec', async ({ playwrightFactoryMethods, page }) => {  
 const logger = new StepLogger('TC2_Reg_DeleteEmployee.spec');
 await playwrightFactoryMethods.GoToPage();
 await logger.logStep(page, 'Navigated to login page');
@@ -43,6 +37,6 @@ await page.waitForTimeout(10000);
 await logger.logStep(page, 'Confirm Deletation ');
 await playwrightFactoryMethods.VerifyFieldExists(addEmpolyee.Records)
 await logger.logStep(page, 'Verify Deletation ');
-await generatePdf(logger.getSteps(), 'TC2_Reg_DeleteEmployee.spec');
+await generatePdf(logger.getSteps(), 'TC3_Reg_DeleteEmployee.spec');
 
 });

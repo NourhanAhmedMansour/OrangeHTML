@@ -1,8 +1,4 @@
-import { test } from "../Fixture/PageFixture"; 
-import Dashboard from "../Pages/Dashboard";
-import LoginPage from "../Pages/LoginPage";
-import AddEmpolyee from "../Pages/AddEmpolyee";
-
+import { test } from "../../Fixture/PageFixture";
 import fs from 'fs';
 import { join } from 'path';
 const LoginPageData = JSON.parse(
@@ -11,24 +7,30 @@ const LoginPageData = JSON.parse(
 const AddEmpolyeeData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddEmpolyeeData.json'), 'utf-8')
   );
-test('LoginwithValidCredentials', async ({ playwrightFactoryMethods, page }) => {  
-  const loginPage = new LoginPage(playwrightFactoryMethods.page);
-  const dashboard = new Dashboard(playwrightFactoryMethods.page);
-  const addEmpolyee = new AddEmpolyee (playwrightFactoryMethods.page);
+test('TC2_Reg_SearchforEmployeebyID.spec', async ({ playwrightFactoryMethods, page }) => {  
+
 
   await playwrightFactoryMethods.GoToPage();
+  await logger.logStep(page, 'Navigated to login page');
   await playwrightFactoryMethods.InputValuesinTB(loginPage.Username, LoginPageData.Username);
+  await logger.logStep(page, 'Entered Username');
   await playwrightFactoryMethods.InputValuesinTB(loginPage.Password, LoginPageData.Password);
+  await logger.logStep(page, 'Entered Password');
   await playwrightFactoryMethods.ClickOnButton(loginPage.LoginButton);
+  await logger.logStep(page, 'Clicked Login button');
   await playwrightFactoryMethods.ClickOnButton(dashboard.Empolyee);
+  await logger.logStep(page, 'Clicked Empolyee');
   await playwrightFactoryMethods.ClickOnButton(addEmpolyee.EmpolyeeId);
   await playwrightFactoryMethods.InputValuesinTB(addEmpolyee.EmpolyeeId1, AddEmpolyeeData.EmpolyeeId);
   await page.waitForTimeout(5000); 
+  await logger.logStep(page, 'Entered EmpolyeeId');
 await playwrightFactoryMethods.ClickOnButton(addEmpolyee.SearchButton);
+await logger.logStep(page, 'Clicked Search button');
 await playwrightFactoryMethods.VerifyValueExists(addEmpolyee.Cell1, AddEmpolyeeData.EmpolyeeId);
+await logger.logStep(page, 'Verify EmpolyeeId');
 await playwrightFactoryMethods.VerifyValueExists(addEmpolyee.Cell2, AddEmpolyeeData.FirstName);
+await logger.logStep(page, 'Verify FirstName');
 await playwrightFactoryMethods.VerifyValueExists(addEmpolyee.Cell3, AddEmpolyeeData.LastName);
-
-
-
+await logger.logStep(page, 'Verify LastName');
+await generatePdf(logger.getSteps(), 'TC2_Reg_SearchforEmployeebyID.spec');
 });

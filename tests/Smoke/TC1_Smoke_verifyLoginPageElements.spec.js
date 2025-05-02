@@ -1,10 +1,8 @@
-import { test } from "../Fixture/PageFixture"; 
-import LoginPage from "../Pages/LoginPage"; 
-const { StepLogger } = require('../utils/stepLogger');
-const { generatePdf } = require('../utils/pdfGenerator');
+import { test } from "../../Fixture/PageFixture"; 
+const { StepLogger } = require('../../utils/stepLogger');
+const { generatePdf } = require('../../utils/pdfGenerator');
 
 test('TC1_Smoke_verifyLoginPageElements.spec', async ({ playwrightFactoryMethods, page }) => {  
-  const loginPage = new LoginPage(page);
   const logger = new StepLogger('TC1_Smoke_verifyLoginPageElements.spec');
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');
