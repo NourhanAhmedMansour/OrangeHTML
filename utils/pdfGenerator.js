@@ -12,7 +12,7 @@ async function generatePdf(steps, testName) {
   const outputPath = path.join(__dirname, 'Results', fileName);
 
   for (const step of steps) {
-    const page = pdfDoc.addPage([595, 842]); // A4 size
+    const page = pdfDoc.addPage([595, 842]); 
     page.drawText(step.description, {
       x: 50,
       y: 800,

@@ -8,8 +8,8 @@ class PlaywrightFactoryMethodS {
     }
 
     async GoToPage() {
-        const baseURL = process.env.BASE_URL;  // Assume BASE_URL is set
-        console.log('Navigating to:', baseURL);  // Optional: Log the URL for debugging
+        const baseURL = process.env.BASE_URL;  
+        console.log('Navigating to:', baseURL);  
         await this.page.goto(baseURL);
     }
 
@@ -20,10 +20,8 @@ class PlaywrightFactoryMethodS {
     async InputValuesinTB(locator, value) {
         await locator.fill(value); 
         
-        // Fill the input field with the provided value
     }
     async VerifyFieldPresence(locator) {
-        // Check if the locator exists in the DOM (does not need to be visible)
         await expect(locator).toBeAttached();
     }
 
@@ -35,7 +33,7 @@ class PlaywrightFactoryMethodS {
     }
          
     async SelectOptionFromDDL(locator, value) {
-        await locator.click(); // Open dropdown
+        await locator.click(); 
         await this.page.getByRole('option', { name: value, exact: true }).click();
 }
 

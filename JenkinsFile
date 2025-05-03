@@ -1,31 +1,31 @@
 pipeline {
-    agent any  // This specifies that Jenkins can run this on any available agent (node).
+    agent any  
 
     environment {
-        // Define any environment variables you need for your pipeline.
+        
         NODE_ENV = 'production'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from your Git repository
+                
                 git 'https://gitlab.com/projects20254650718/my-automation-tests.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install necessary dependencies like Node.js modules, etc.
+                
                 script {
-                    sh 'npm install'  // For Node.js projects
+                    sh 'npm install'  
                 }
             }
         }
 
         stage('Run Tests') {
             steps {
-                // Run your Playwright tests or any other tests
+               
                 script {
                     sh 'npx playwright test'
                 }
@@ -34,26 +34,26 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // If tests pass, deploy the application (this step depends on your project needs)
+                
                 echo 'Deploying to production environment...'
-                // Example: sh 'deploy.sh'
+                
             }
         }
     }
 
     post {
         always {
-            // This block will run after all stages, whether the pipeline succeeds or fails.
+           
             echo 'Cleaning up workspace...'
         }
 
         success {
-            // Actions to take if the build is successful (e.g., email notification)
+           
             echo 'Build succeeded!'
         }
 
         failure {
-            // Actions to take if the build fails (e.g., email notification)
+          
             echo 'Build failed!'
         }
     }
