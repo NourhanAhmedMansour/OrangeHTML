@@ -1,11 +1,14 @@
 import { test } from "../../Fixture/PageFixture"; 
 import fs from 'fs';
 import { join } from 'path';
+const { StepLogger } = require('../../utils/stepLogger');
+const { generatePdf } = require('../../utils/pdfGenerator');
 const LoginPageData = JSON.parse(
   fs.readFileSync(join('JsonFiles', 'LoginPageData.json'), 'utf-8')
 );
 
-test('TC2_Smoke_LoginwithValidCredentials.spec', async ({ playwrightFactoryMethods }) => { 
+test('TC2_Smoke_LoginwithValidCredentials.spec', async ({ playwrightFactoryMethods,page, loginPage, dashboard  }) => { 
+  const logger = new StepLogger('TC2_Smoke_LoginwithValidCredentials.spec');
 
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');
