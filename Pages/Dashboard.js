@@ -10,6 +10,7 @@ class Dashboard {
         this.EmployeeDistributionSub = this.page.locator(".emp-distrib-chart").first()  
         this.EmployeeDistributionLoc = this.page.locator(".emp-distrib-chart").last();  
         this.Timesheet = this.page.locator(".orangehrm-dashboard-widget-body").nth(1);  
+        this.TimesheetWeek = this.page.locator("p.oxd-text--p", { hasText: " - " }).first();
 
     }
 }

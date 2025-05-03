@@ -8,7 +8,7 @@ const LoginPageData = JSON.parse(
   fs.readFileSync(join('JsonFiles', 'LoginPageData.json'), 'utf-8')
 );
 
-test('TC6_Reg_VerifyDashboardWidgetsFunctionality', async ({ playwrightFactoryMethods, page }) => {  
+test('TC6_Reg_VerifyDashboardWidgetsFunctionality', async ({ playwrightFactoryMethods, page, loginPage, dashboard  }) => {  
   const logger = new StepLogger('TC6_Reg_VerifyDashboardWidgetsFunctionality');
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');
@@ -23,6 +23,8 @@ test('TC6_Reg_VerifyDashboardWidgetsFunctionality', async ({ playwrightFactoryMe
   await playwrightFactoryMethods.VerifyFieldPresence(dashboard.EmployeeDistributionLoc);
   await logger.logStep(page, 'Verified presence of "Employee Distribution by Location" widget');
   await playwrightFactoryMethods.VerifyFieldPresence(dashboard.Timesheet);
+  await logger.logStep(page, 'Verified presence of "Timesheet" widget');
+  await playwrightFactoryMethods.VerifyValueExists(dashboard.TimesheetWeek, 'Apr 28 - May 04');
   await logger.logStep(page, 'Verified presence of "Timesheet" widget');
   await generatePdf(logger.getSteps(), 'TC6_Reg_VerifyDashboardWidgetsFunctionality');
 });

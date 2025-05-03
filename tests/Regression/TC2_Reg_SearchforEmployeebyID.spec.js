@@ -1,14 +1,17 @@
 import { test } from "../../Fixture/PageFixture";
 import fs from 'fs';
 import { join } from 'path';
+const { StepLogger } = require('../..//utils/stepLogger');
+const { generatePdf } = require('../..//utils/pdfGenerator');
 const LoginPageData = JSON.parse(
   fs.readFileSync(join('JsonFiles', 'LoginPageData.json'), 'utf-8')
 );
 const AddEmpolyeeData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddEmpolyeeData.json'), 'utf-8')
   );
-test('TC2_Reg_SearchforEmployeebyID.spec', async ({ playwrightFactoryMethods, page }) => {  
+test('TC2_Reg_SearchforEmployeebyID.spec', async ({ playwrightFactoryMethods, page, loginPage, dashboard, addEmpolyee }) => {  
 
+  const logger = new StepLogger('TC2_Reg_SearchforEmployeebyID.spec');
 
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');

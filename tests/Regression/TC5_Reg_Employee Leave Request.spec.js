@@ -1,5 +1,7 @@
 import { test } from "../../Fixture/PageFixture"; 
 import fs from 'fs';
+const { StepLogger } = require('../../utils/stepLogger');
+const { generatePdf } = require('../../utils/pdfGenerator');
 import { join } from 'path';
 const LoginPageData = JSON.parse(
   fs.readFileSync(join('JsonFiles', 'LoginPageData.json'), 'utf-8')
@@ -7,7 +9,9 @@ const LoginPageData = JSON.parse(
 const AddLeaveData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddLeaveData.json'), 'utf-8')
   );
-test('TC5_Reg_Employee Leave Request.spec', async ({ playwrightFactoryMethods, page }) => {  
+test('TC5_Reg_Employee Leave Request.spec', async ({ playwrightFactoryMethods, page,  loginPage, dashboard, addLeave}) => {  
+  const logger = new StepLogger('TC5_Reg_Employee Leave Request.spec');
+
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');
   await playwrightFactoryMethods.InputValuesinTB(loginPage.Username, LoginPageData.Username);

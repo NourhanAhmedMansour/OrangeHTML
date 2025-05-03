@@ -9,8 +9,8 @@ const LoginPageData = JSON.parse(
 const AddEmpolyeeData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddEmpolyeeData.json'), 'utf-8')
   );
-test('TC3_Reg_DeleteEmployee.spec', async ({ playwrightFactoryMethods, page }) => {  
-const logger = new StepLogger('TC2_Reg_DeleteEmployee.spec');
+test('TC3_Reg_DeleteEmployee.spec', async ({ playwrightFactoryMethods, page, loginPage,addEmpolyee, dashboard }) => {  
+const logger = new StepLogger('TC3_Reg_DeleteEmployee.spec');
 await playwrightFactoryMethods.GoToPage();
 await logger.logStep(page, 'Navigated to login page');
 await playwrightFactoryMethods.InputValuesinTB(loginPage.Username, LoginPageData.Username);

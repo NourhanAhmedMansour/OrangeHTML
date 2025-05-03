@@ -9,7 +9,7 @@ const LoginPageData = JSON.parse(
 const AddEmpolyeeData = JSON.parse(
     fs.readFileSync(join('JsonFiles', 'AddEmpolyeeData.json'), 'utf-8')
   );
-test('TC1_Reg_AddNewEmployee.spec', async ({ playwrightFactoryMethods, page }) => {  
+test('TC1_Reg_AddNewEmployee.spec', async ({ playwrightFactoryMethods, page,loginPage, dashboard, addEmpolyee  }) => {  
   const logger = new StepLogger('TC1_Reg_AddNewEmployee.spec');
   await playwrightFactoryMethods.GoToPage();
   await logger.logStep(page, 'Navigated to login page');
