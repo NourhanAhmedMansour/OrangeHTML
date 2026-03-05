@@ -33,10 +33,10 @@ pipeline {
     }
  
     stage('Generate Allure Report') {
-      steps {
+    steps {
         bat 'npx allure generate test-results/allure-results -o allure-report --clean'
-      }
     }
+}
  
   }
  
