@@ -25,7 +25,14 @@ pipeline {
         bat 'npx playwright install'
       }
     }
- 
+    stage('Clean Results') {
+    steps {
+      bat 'rmdir /s /q test-results 2>nul || exit /b 0'
+      bat 'rmdir /s /q allure-results 2>nul || exit /b 0'
+      bat 'rmdir /s /q allure-report 2>nul || exit /b 0'
+      bat 'rmdir /s /q playwright-report 2>nul || exit /b 0'
+    }
+  }
     stage('Run Playwright Tests') {
       steps {
         bat 'npx playwright test'
