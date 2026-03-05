@@ -50,13 +50,12 @@ pipeline {
     junit testResults: 'test-results/junit/results.xml', allowEmptyResults: true
  
     script {
-      def tr = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction)
-      def total   = tr ? tr.totalCount : 0
-      def failed  = tr ? tr.failCount  : 0
-      def skipped = tr ? tr.skipCount  : 0
-      def passed  = total - failed - skipped
- 
-      def summary = """Result: ${currentBuild.currentResult}
+        def tr = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction)
+        def total = tr?.totalCount ?: 0
+        def failed = tr?.failCount ?: 0
+        def skipped = tr?.skipCount ?: 0
+        def passed = total - failed - skipped
+        def summary = """Result: ${currentBuild.currentResult}
 Total: ${total}
 Passed: ${passed}
 Failed: ${failed}
