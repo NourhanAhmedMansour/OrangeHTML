@@ -67,7 +67,7 @@ Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
  
-Allure Report: http://localhost:8080/job/OrangeHTML/${env.BUILD_NUMBER}allure/#
+Allure Report: http://localhost:8080/job/OrangeHTML/${env.BUILD_NUMBER}/allure/#
 
 Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
 """
