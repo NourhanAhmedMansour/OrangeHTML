@@ -42,7 +42,7 @@ pipeline {
    post {
   always {
     junit 'test-results/junit/results.xml'
-    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+    archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
  
     emailext(
       subject: "Playwright Test Results",
