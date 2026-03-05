@@ -80,3 +80,4 @@ Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
                     allowEmptyArchive: true
   }
 }
+}
