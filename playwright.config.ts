@@ -20,7 +20,8 @@ export default defineConfig({
   ['list'],
   ['junit', { outputFile: 'test-results/junit/results.xml' }],
   ['json',  { outputFile: 'test-results/results.json' }],
-  ['html',  { outputFolder: 'playwright-report', open: 'never' }]
+  ['html',  { outputFolder: 'playwright-report', open: 'never' }],
+   ['allure-playwright',  { outputFolder: 'allure-results', open: 'never' }]
 ],
  
   outputDir: 'test-results/artifacts',
