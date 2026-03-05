@@ -34,11 +34,11 @@ pipeline {
  
     stage('Generate Allure Report') {
     steps {
-        bat 'npx allure generate test-results/allure-results -o allure-report --clean'
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            bat 'npx allure generate test-results/allure-results -o allure-report --clean'
+        }
     }
 }
- 
-  }
  
   post {
     always {
