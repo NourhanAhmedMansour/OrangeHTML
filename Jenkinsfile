@@ -1,37 +1,55 @@
 pipeline {
   agent any
-   options {
+ 
+  options {
     timestamps()
-    disableConcurrentBuilds()  }
+    disableConcurrentBuilds()
+  }
  
   stages {
+ 
     stage('Checkout') {
       steps {
-        checkout scm      }    }
-     stage('Install Dependencies') {
+        checkout scm
+      }
+    }
+ 
+    stage('Install Dependencies') {
       steps {
-        bat 'npm ci'      }    }
+        bat 'npm ci'
+      }
+    }
  
     stage('Install Playwright Browsers') {
       steps {
-        bat 'npx playwright install'      }    }
+        bat 'npx playwright install'
+      }
+    }
  
     stage('Run Playwright Tests') {
       steps {
-        bat 'npx playwright test'      }    }
+        bat 'npx playwright test'
+      }
+    }
  
     stage('Generate Allure Report') {
       steps {
-        bat 'npx allure generate test-results/allure-results -o allure-report --clean' }   }  }
+        bat 'npx allure generate test-results/allure-results -o allure-report --clean'
+      }
+    }
+ 
+  }
  
   post {
     always {
       script {
+ 
         def passed = 0
         def failed = 0
         def skipped = 0
-        def total  = 0
-         if (fileExists('test-results/results.json')) {
+        def total = 0
+ 
+        if (fileExists('test-results/results.json')) {
           def json = readJSON file: 'test-results/results.json'
  
           json.suites.each { suite ->
@@ -39,9 +57,18 @@ pipeline {
               spec.tests.each { t ->
                 total++
                 def status = t.results[0]?.status
-                if (status == 'passed') passed++
-                else if (status == 'failed') failed++
-                else skipped++ }}  }       }
+ 
+                if (status == 'passed') {
+                  passed++
+                } else if (status == 'failed') {
+                  failed++
+                } else {
+                  skipped++
+                }
+              }
+            }
+          }
+        }
  
         def summary = """
 Result: ${currentBuild.currentResult}
@@ -53,15 +80,20 @@ Skipped: ${skipped}
 Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
-Playwright Report (if archived): ${env.BUILD_URL}artifact/playwright-report/index.html
+Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
 """
-         emailext(
+ 
+        emailext(
           to: 'nourhanaamansour@gmail.com',
           subject: "Jenkins: ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
-          body: summary)}
+          body: summary
+        )
+ 
+      }
+ 
       junit 'test-results/junit/results.xml'
+ 
       archiveArtifacts artifacts: 'playwright-report/**, allure-report/**, test-results/**', allowEmptyArchive: true
     }
   }
 }
- 
