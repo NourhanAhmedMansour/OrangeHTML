@@ -10,7 +10,7 @@ export default defineConfig({
   workers: process.env.CI ? undefined : undefined,
  
   use: {
-    headless: true,
+    headless: false,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'
