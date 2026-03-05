@@ -41,14 +41,48 @@ pipeline {
  
    post {
   always {
-    junit 'test-results/junit/results.xml'
-    archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
+    script {
+      def passed = 0
+      def failed = 0
+      def skipped = 0
+      def total = 0
  
-    emailext(
-      subject: "Playwright Test Results",
-      body: "The Jenkins build has finished. Please check the results.",
-      to: "nourhanaamansour@gmail.com"
-    )
+      if (fileExists('test-results/results.json')) {
+        def json = readJSON file: 'test-results/results.json'
+ 
+        json.suites.each { suite ->
+          suite.specs.each { spec ->
+            spec.tests.each { t ->
+              total++
+              def status = t.results[0]?.status
+              if (status == 'passed') passed++
+              else if (status == 'failed') failed++
+              else skipped++
+            }
+          }
+        }
+      }
+ 
+      def summary = """
+Result: ${currentBuild.currentResult}
+Total: ${total}
+Passed: ${passed}
+Failed: ${failed}
+Skipped: ${skipped}
+ 
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+URL: ${env.BUILD_URL}
+Report (if archived): ${env.BUILD_URL}artifact/playwright-report/index.html
+"""
+ 
+      emailext(
+        to: 'nourhanaamansour@gmail.com',
+        subject: "Jenkins: ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult} | P:${passed} F:${failed} S:${skipped}",
+        body: summary
+      )
+    }
+     junit 'test-results/junit/results.xml'
+    archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
   }
-}
 }

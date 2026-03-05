@@ -16,11 +16,12 @@ export default defineConfig({
     video: 'retain-on-failure'
   },
  
-  reporter: [
-    ['html', { outputFolder: 'test-results/playwright-report', open: 'never' }],
-    ['allure-playwright', { outputFolder: 'test-results/allure-results' }],
-    ['junit', { outputFile: 'test-results/junit/results.xml' }]
-  ],
+ reporter: [
+  ['list'],
+  ['junit', { outputFile: 'test-results/junit/results.xml' }],
+  ['json',  { outputFile: 'test-results/results.json' }],
+  ['html',  { outputFolder: 'playwright-report', open: 'never' }]
+],
  
   outputDir: 'test-results/artifacts',
  
