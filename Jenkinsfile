@@ -40,6 +40,8 @@ pipeline {
     }
 }
  
+  }
+ 
   post {
     always {
       script {
