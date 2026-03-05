@@ -39,14 +39,15 @@ pipeline {
         }
     }
  
-    post {
-        always {
+   post {
+  always {
+    junit 'test-results/junit/results.xml'
+    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
  
-            junit 'test-results/junit/results.xml'
- 
-            archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
- 
-        }
-    }
+    emailext(
+      subject: "Playwright Test Results",
+      body: "The Jenkins build has finished. Please check the results.",
+      to: "nourhanaamansour@gmail.com"
+    )
+  }
 }
- 
