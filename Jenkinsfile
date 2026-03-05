@@ -78,7 +78,7 @@ Total: ${total}
 Passed: ${passed}
 Failed: ${failed}
 Skipped: ${skipped}
- 
+Allure Report: ${env.BUILD_URL}artifact/allure-report/index.html
 Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
