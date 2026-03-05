@@ -1,37 +1,41 @@
 pipeline {
-    agent any
+  agent any
  
-    stages {
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+  }
  
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/NourhanAhmedMansour/OrangeHTML.git'
-            }
-        }
- 
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
- 
-        stage('Install Playwright Browsers') {
-            steps {
-                bat 'npx playwright install'
-            }
-        }
- 
-        stage('Run Playwright Tests') {
-            steps {
-                bat 'npx playwright test'
-            }
-        }
- 
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
  
-    post {
-        always {
-            archiveArtifacts artifacts: 'playwright-report/**'
-        }
+    stage('Install Dependencies') {
+      steps {
+        bat 'npm ci'
+      }
     }
+ 
+    stage('Install Playwright Browsers') {
+      steps {
+        bat 'npx playwright install'
+      }
+    }
+ 
+    stage('Run Playwright Tests') {
+      steps {
+        bat 'npx playwright test'
+      }
+    }
+  }
+ 
+  post {
+    always {
+      archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+    }
+  }
 }
+ 
