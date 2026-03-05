@@ -1,41 +1,52 @@
 pipeline {
-  agent any
+    agent any
  
-  options {
-    tigiestamps()
-    disableConcurrentBuilds()
-  }
- 
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    options {
+        timestamps()
+        disableConcurrentBuilds()
     }
  
-    stage('Install Dependencies') {
-      steps {
-        bat 'npm ci'
-      }
+    stages {
+ 
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+ 
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm ci'
+            }
+        }
+ 
+        stage('Install Playwright Browsers') {
+            steps {
+                bat 'npx playwright install'
+            }
+        }
+ 
+        stage('Run Playwright Tests') {
+            steps {
+                bat 'npx playwright test'
+            }
+        }
+ 
+        stage('Generate Allure Report') {
+            steps {
+                bat 'npx allure generate test-results/allure-results -o allure-report --clean'
+            }
+        }
     }
  
-    stage('Install Playwright Browsers') {
-      steps {
-        bat 'npx playwright install'
-      }
-    }
+    post {
+        always {
  
-    stage('Run Playwright Tests') {
-      steps {
-        bat 'npx playwright test'
-      }
-    }
-  }
+            junit 'test-results/junit/results.xml'
  
-  post {
-    always {
-      archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+ 
+        }
     }
-  }
 }
  
