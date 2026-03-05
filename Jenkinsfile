@@ -47,17 +47,17 @@ pipeline {
   post {
   always {
  
-    junit testResults: 'test-results/junit/results.xml', allowEmptyResults: true
- 
     script {
-        def action = currentBuild.rawBuild.getAction(hudson.tasks.junit.TestResultAction)
-        def total = action?.getTotalCount() ?: 0
-        def failed = action?.getFailCount() ?: 0
-        def skipped = action?.getSkipCount() ?: 0
-        def passed = total - failed - skipped
-        def summary = """Result: ${currentBuild.currentResult}
-
-        
+ 
+      def r = junit testResults: 'test-results/junit/results.xml', allowEmptyResults: true
+ 
+      def total = r.totalCount
+      def failed = r.failCount
+      def skipped = r.skipCount
+      def passed = total - failed - skipped
+ 
+      def summary = """Result: ${currentBuild.currentResult}
+ 
 Total: ${total}
 Passed: ${passed}
 Failed: ${failed}
@@ -66,7 +66,9 @@ Skipped: ${skipped}
 Job: ${env.JOB_NAME}
 Build: #${env.BUILD_NUMBER}
 URL: ${env.BUILD_URL}
+ 
 Allure Report: http://localhost:8080/job/OrangeHTML/${env.BUILD_NUMBER}allure/#
+
 Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
 """
  
@@ -77,8 +79,7 @@ Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
       )
     }
  
-    archiveArtifacts artifacts: 'playwright-report/**, allure-report/**, test-results/**',
-                    allowEmptyArchive: true
+    archiveArtifacts artifacts: 'playwright-report/**, allure-report/**, test-results/**', allowEmptyArchive: true
   }
 }
 }
