@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 
-                git 'https://gitlab.com/projects20254650718/my-automation-tests.git'
+                git 'https://github.com/NourhanAhmedMansour/OrangeHTML.git'
             }
         }
 
