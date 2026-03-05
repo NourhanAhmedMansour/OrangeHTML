@@ -32,12 +32,14 @@ pipeline {
       }
     }
  
-    stage('Generate Allure Report') {
-  steps {
-    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-      bat 'npx allure-commandline generate allure-results -o allure-report --clean'
+    stage('Allure Report') {
+    steps {
+        allure([
+            includeProperties: false,
+            jdk: '',
+            results: [[path: 'allure-results']]
+        ])
     }
-  }
 }
  
   }
