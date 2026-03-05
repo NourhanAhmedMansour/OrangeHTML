@@ -6,16 +6,29 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^22.15.2",
-    "allure-playwright": "^3.2.1"
+    "allure-playwright": "^3.5.0",
+    "dotenv": "^17.3.1",
+    "playwright": "^1.58.2"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
     "fs-extra": "^11.3.0",
     "pdf-lib": "^1.17.1",
     "uuid": "^11.1.0"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/projects20254650718/my-automation-tests.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://gitlab.com/projects20254650718/my-automation-tests/issues"
+  },
+  "homepage": "https://gitlab.com/projects20254650718/my-automation-tests#readme"
 }
