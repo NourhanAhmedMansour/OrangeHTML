@@ -81,6 +81,7 @@ Playwright Report: ${env.BUILD_URL}artifact/playwright-report/index.html
  
       emailext(
         to: 'nourhanaamansour@gmail.com',
+        cc: 'nourhan.a.ahmed@capgemini.com',
         subject: "Jenkins: ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
         body: summary
       )
